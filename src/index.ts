@@ -439,8 +439,8 @@ export const listOnOpensea = async (
         consideration: [],
         startTime: '1666480886',
         endTime: '1666680886',
-        orderType: 0,
-        zone: '0x0000000000000000000000000000000000000000',
+        orderType: 2,
+        zone: '0x000056f7000000ece9003ca63978907a00ffd100',
         zoneHash:
           '0x0000000000000000000000000000000000000000000000000000000000000000',
         conduitKey:
@@ -452,6 +452,8 @@ export const listOnOpensea = async (
     },
     protocol_address: '0x0000000000000068f116a894984e2db1123eb395'
   };
+
+  // 2|listing-bot  | Error:  {"errors":["You provided an invalid order type when using an ERC721C creator fee enforced contract. Please set the orderType to FULL_RESTRICTED (2) or PARTIAL_RESTRICTED (3) and use the required zone 0x000056f7000000ece9003ca63978907a00ffd100"]}
 
   // Ensure parameters are properly structured to avoid "Cannot set properties of undefined" error
   listingPayload.parameters = listingPayload.protocol_data.parameters;
