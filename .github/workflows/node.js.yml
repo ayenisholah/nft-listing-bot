@@ -35,5 +35,5 @@ jobs:
       - run: npm run build --if-present
      
       - name: change directory
-        run: cd /home/leo/runners/listing-bot/_work/listing-bot/listing-bot
-      - run: pm2 restart 0
+        run: cd /home/leo/runners/listing-bot/_work/nft-listing-bot/nft-listing-bot
+      - run: pm2 restart listing-bot
