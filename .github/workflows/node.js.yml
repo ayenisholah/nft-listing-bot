@@ -12,7 +12,10 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
-
+    env:
+      PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}
+      API_KEY: ${{secrets.API_KEY}}
+      ALCHEMY_API_KEY: ${{secrets.ALCHEMY_API_KEY}}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
@@ -33,6 +36,11 @@ jobs:
 
       - run: npm install
       - run: npm run build --if-present
+      - name: Set Secrets and Change Dir
+        run: | # Secrets needed on the server
+          echo "PRIVATE_KEY=${{secrets.PRIVATE_KEY}}" >> .env
+          echo "API_KEY=${{secrets.API_KEY}}" >> .env
+          echo "ALCHEMY_API_KEY=${{secrets.ALCHEMY_API_KEY}}" >> .env
      
       - name: change directory
         run: cd /home/leo/runners/listing-bot/_work/nft-listing-bot/nft-listing-bot
