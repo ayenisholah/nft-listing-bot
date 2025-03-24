@@ -34,7 +34,7 @@ const floorPrices: { [key: string]: number } = {}
 setInterval(() => {
   console.log('Clearing floor prices cache');
   Object.keys(floorPrices).forEach(key => delete floorPrices[key]);
-}, 30 * 60 * 1000);
+}, 15 * 60 * 1000);
 
 
 const CONFIG = {
