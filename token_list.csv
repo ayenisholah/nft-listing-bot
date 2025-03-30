@@ -1,2 +1,2 @@
-s/n,slug,contractAddress,tokenId,buyPrice,margin
-2,nakamigos,0xd774557b647330c91bf44cfeab205095f7e6c367,17477,0.156,0.006
+s/n,slug,contractAddress,tokenId,buyPrice,margin,listAtFloor
+2,nakamigos,0xd774557b647330c91bf44cfeab205095f7e6c367,17477,0.156,0.006,true

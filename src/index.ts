@@ -64,7 +64,8 @@ async function main() {
         contractAddress: data.contractAddress,
         tokenId: data.tokenId,
         buyPrice: Number(data.buyPrice),
-        margin: Number(data.margin)
+        margin: Number(data.margin),
+        listAtFloor: data.listAtFloor
       }
       result.push(collection);
     })
@@ -185,7 +186,7 @@ async function listTokens(collections: ICollection[]) {
 
         const previousFloorPrice = floorPrices[asset.slug] || 0
 
-        if (listingPrice < priceMin) {
+        if (listingPrice < priceMin && asset.listAtFloor !== "true") {
           console.log('-------------------------------------------------');
           console.log('LISTING PRICE IS LESS THAN MINIMUM ACCEPT PRICE');
           console.log('-------------------------------------------------');
@@ -747,6 +748,7 @@ interface ICollection {
   tokenId: string;
   buyPrice: number;
   margin: number;
+  listAtFloor: string;
 }
 
 
