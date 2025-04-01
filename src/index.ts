@@ -119,7 +119,16 @@ async function listTokens(collections: ICollection[]) {
       return
     }
 
-    const priceMin = asset.buyPrice + (asset.margin || 0.005)
+    const collectionData = await getCollectionInfoWithRapidApi(
+      asset.slug
+    );
+
+
+    const enforceCreatorFee = collectionData?.enforceCreatorFee
+    const creatorFeesValue = enforceCreatorFee && collectionData?.creator_fees ? Number(Object.values(collectionData.creator_fees)[0]) / 100 : 0;
+    const marketFee = 0.5
+    const multiplier = 1 + ((creatorFeesValue + marketFee) / 100)
+    const priceMin = (asset.buyPrice + (asset.margin || 0.005)) * multiplier
 
     const orders = await retrieveOrders(asset.slug, asset.contractAddress, asset.tokenId)
 
@@ -154,17 +163,10 @@ async function listTokens(collections: ICollection[]) {
       console.log('BEST OFFER: ', bestOffer);
       console.log('-------------------------------------------------');
 
-      const marketFee_offer = 0.5
-      const creatorfee = 5
-      const priceOffer = bestOffer * (1 - (marketFee_offer + creatorfee) / 100) - acceptOfferGasFee
-      console.log('-------------------------------------------------');
-      console.log('PRICE OFFER: ', priceOffer);
-      console.log('-------------------------------------------------');
-
       console.log('-------------------------------------------------');
       console.log('MINIMUM ACCEPT PRICE: ', priceMin);
       console.log('-------------------------------------------------');
-      if (priceOffer > priceMin && gasEstimate > 0) {
+      if (bestOffer > priceMin) {
         console.log('-------------------------------------------------');
         console.log('ACCEPT OFFER');
         console.log('-------------------------------------------------');
@@ -201,9 +203,7 @@ async function listTokens(collections: ICollection[]) {
           console.log(`${GOLD}Floor price unchanged for ${asset.slug} at ${floor_Price.toFixed(5)} ETH - skipping${RESET}`);
           return;
         }
-        const collectionData = await getCollectionInfoWithRapidApi(
-          asset.slug
-        );
+
         const normalizedFees = normalizeCreatorFees(collectionData?.creator_fees);
         console.log({ slug: asset.slug, listingPrice, normalizedFees, enforceCreatorFee: collectionData?.enforceCreatorFee });
 
