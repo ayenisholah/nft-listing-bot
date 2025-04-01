@@ -949,3 +949,6 @@ export async function getCollectionStats(collectionSlug: string) {
     return 0;
   }
 }
+
+
+const CRON_PATTERN_15_MINUTES = '*/15 * * * *';
